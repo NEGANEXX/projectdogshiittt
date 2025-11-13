@@ -15,17 +15,6 @@ export default function Footer() {
               Your gateway to authentic Moroccan experiences. Discover the beauty, culture, and
               adventure that Morocco has to offer.
             </p>
-            <div className="flex gap-4">
-              {['📘', '📷', '🐦', '📺'].map((icon, index) => (
-                <a
-                  key={index}
-                  href="#"
-                  className="text-2xl hover:scale-110 transition-transform no-underline"
-                >
-                  {icon}
-                </a>
-              ))}
-            </div>
           </div>
           <div>
             <h4 className="font-bold text-primary mb-4">Quick Links</h4>
