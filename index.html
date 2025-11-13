@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atlas Adventures | Discover Morocco</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">
+          <span class="logo-icon">⛰️</span>
+          <span class="logo-text">Atlas Adventures</span>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#destinations" class="nav-link">Destinations</a></li>
+          <li><a href="#tours" class="nav-link">Tours</a></li>
+          <li><a href="#experiences" class="nav-link">Experiences</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+        <button class="nav-cta">Plan Your Trip</button>
+        <button class="mobile-menu-btn">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="hero-slideshow">
+        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1548783307-f63adc8f6e1d?auto=format&fit=crop&w=1920&q=80')"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80')"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1548783223-dc03c0b8f6b4?auto=format&fit=crop&w=1920&q=80')"></div>
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-badge">✨ Authentic Moroccan Experiences</div>
+        <h1 class="hero-title">
+          <span class="title-line">Discover the</span>
+          <span class="title-line highlight">Magic of Morocco</span>
+        </h1>
+        <p class="hero-subtitle">
+          From the Atlas Mountains to the Sahara Desert, embark on unforgettable journeys through ancient medinas, vibrant souks, and breathtaking landscapes.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary">Explore Tours</button>
+          <button class="btn btn-secondary">Watch Video</button>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number" data-target="5000">0</div>
+            <div class="stat-label">Happy Travelers</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-target="150">0</div>
+            <div class="stat-label">Destinations</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-target="98">0</div>
+            <div class="stat-label">% Satisfaction</div>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-down">
+        <span>Scroll</span>
+        <div class="scroll-arrow"></div>
+      </div>
+    </section>
+
+    <!-- Destinations Section -->
+    <section class="destinations" id="destinations">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Explore</span>
+          <h2 class="section-title">Popular Destinations</h2>
+          <p class="section-description">Discover the most enchanting cities and regions of Morocco</p>
+        </div>
+        <div class="destinations-grid" id="destinationsGrid">
+          <!-- Will be populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Tours Section -->
+    <section class="tours" id="tours">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Tours</span>
+          <h2 class="section-title">Featured Adventures</h2>
+          <p class="section-description">Handpicked experiences crafted for unforgettable memories</p>
+        </div>
+        <div class="tours-filter">
+          <button class="filter-btn active" data-filter="all">All Tours</button>
+          <button class="filter-btn" data-filter="desert">Desert</button>
+          <button class="filter-btn" data-filter="cities">Cities</button>
+          <button class="filter-btn" data-filter="mountains">Mountains</button>
+          <button class="filter-btn" data-filter="coast">Coast</button>
+        </div>
+        <div class="tours-grid" id="toursGrid">
+          <!-- Will be populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Experiences Section -->
+    <section class="experiences" id="experiences">
+      <div class="container">
+        <div class="experiences-content">
+          <div class="experiences-text">
+            <span class="section-tag">Experiences</span>
+            <h2 class="section-title">Live Like a Local</h2>
+            <p>Immerse yourself in authentic Moroccan culture through unique experiences designed to connect you with local traditions, cuisine, and people.</p>
+            <div class="experience-features">
+              <div class="feature-item">
+                <div class="feature-icon">🍵</div>
+                <h4>Traditional Tea Ceremonies</h4>
+                <p>Learn the art of Moroccan mint tea</p>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon">🎨</div>
+                <h4>Artisan Workshops</h4>
+                <p>Create with local craftsmen</p>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon">🍽️</div>
+                <h4>Cooking Classes</h4>
+                <p>Master authentic Moroccan recipes</p>
+              </div>
+            </div>
+            <button class="btn btn-primary">View All Experiences</button>
+          </div>
+          <div class="experiences-gallery">
+            <div class="gallery-item large">
+              <img src="https://images.unsplash.com/photo-1592839710218-8c85bf4b53f6?auto=format&fit=crop&w=800&q=80" alt="Moroccan experience" />
+            </div>
+            <div class="gallery-item">
+              <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=600&q=80" alt="Moroccan experience" />
+            </div>
+            <div class="gallery-item">
+              <img src="https://images.unsplash.com/photo-1455587734955-081b22074882?auto=format&fit=crop&w=600&q=80" alt="Moroccan experience" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Stories</span>
+          <h2 class="section-title">Traveler Experiences</h2>
+        </div>
+        <div class="testimonials-slider" id="testimonialsSlider">
+          <!-- Will be populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="cta-background"></div>
+      <div class="container">
+        <div class="cta-content">
+          <h2>Ready to Start Your Moroccan Adventure?</h2>
+          <p>Let our travel experts create a personalized itinerary just for you</p>
+          <div class="cta-actions">
+            <button class="btn btn-primary btn-large">Get Started</button>
+            <button class="btn btn-outline btn-large">Contact Us</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-col">
+            <div class="footer-logo">
+              <span class="logo-icon">⛰️</span>
+              <span class="logo-text">Atlas Adventures</span>
+            </div>
+            <p>Your gateway to authentic Moroccan experiences. Discover the beauty, culture, and adventure that Morocco has to offer.</p>
+            <div class="social-links">
+              <a href="#" aria-label="Facebook">📘</a>
+              <a href="#" aria-label="Instagram">📷</a>
+              <a href="#" aria-label="Twitter">🐦</a>
+              <a href="#" aria-label="YouTube">📺</a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="#destinations">Destinations</a></li>
+              <li><a href="#tours">Tours</a></li>
+              <li><a href="#experiences">Experiences</a></li>
+              <li><a href="#about">About Us</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Support</h4>
+            <ul>
+              <li><a href="#">FAQ</a></li>
+              <li><a href="#">Travel Guide</a></li>
+              <li><a href="#">Terms & Conditions</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contact</h4>
+            <ul>
+              <li>📍 23, rue Maarif Aviation, Rabat</li>
+              <li>📞 +212 537 635 750</li>
+              <li>✉️ info@atlasadventures.ma</li>
+              <li>🕒 Mon-Sat: 9AM - 6PM</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Atlas Adventures. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
