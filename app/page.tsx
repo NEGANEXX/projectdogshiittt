@@ -22,6 +22,19 @@ export default function Home() {
     return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
+  useEffect(() => {
+    // Handle hash navigation on page load
+    if (window.location.hash) {
+      const hash = window.location.hash
+      setTimeout(() => {
+        const element = document.querySelector(hash)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }
+      }, 100)
+    }
+  }, [])
+
   return (
     <main className="relative min-h-screen bg-white">
       <ParticleBackground />

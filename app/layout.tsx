@@ -21,8 +21,8 @@ const cormorant = Cormorant_Garamond({
 })
 
 export const metadata: Metadata = {
-  title: 'CUIRANNA | Discover Morocco',
-  description: 'Experience authentic Moroccan adventures with CUIRANNA. From the Atlas Mountains to the Sahara Desert.',
+  title: 'OUIRANNA | Discover Morocco',
+  description: 'Experience authentic Moroccan adventures with OUIRANNA. From the Atlas Mountains to the Sahara Desert.',
 }
 
 export default function RootLayout({

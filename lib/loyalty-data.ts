@@ -11,7 +11,7 @@ export interface LoyaltyOffer {
 export const loyaltyOffers: LoyaltyOffer[] = [
   {
     id: 'discount-5',
-    code: 'CUIRANNA5',
+    code: 'OUIRANNA5',
     discount: 5,
     points: 50,
     description: '5% discount on your next booking',
@@ -19,7 +19,7 @@ export const loyaltyOffers: LoyaltyOffer[] = [
   },
   {
     id: 'discount-10',
-    code: 'CUIRANNA10',
+    code: 'OUIRANNA10',
     discount: 10,
     points: 100,
     description: '10% discount on your next booking',
@@ -27,7 +27,7 @@ export const loyaltyOffers: LoyaltyOffer[] = [
   },
   {
     id: 'discount-15',
-    code: 'CUIRANNA15',
+    code: 'OUIRANNA15',
     discount: 15,
     points: 150,
     description: '15% discount on your next booking',
@@ -35,7 +35,7 @@ export const loyaltyOffers: LoyaltyOffer[] = [
   },
   {
     id: 'discount-20',
-    code: 'CUIRANNA20',
+    code: 'OUIRANNA20',
     discount: 20,
     points: 200,
     description: '20% discount on your next booking',
@@ -43,7 +43,7 @@ export const loyaltyOffers: LoyaltyOffer[] = [
   },
   {
     id: 'discount-25',
-    code: 'CUIRANNA25',
+    code: 'OUIRANNA25',
     discount: 25,
     points: 250,
     description: '25% discount on your next booking',
@@ -51,7 +51,7 @@ export const loyaltyOffers: LoyaltyOffer[] = [
   },
   {
     id: 'discount-30',
-    code: 'CUIRANNA30',
+    code: 'OUIRANNA30',
     discount: 30,
     points: 300,
     description: '30% discount on your next booking',
@@ -59,7 +59,7 @@ export const loyaltyOffers: LoyaltyOffer[] = [
   },
   {
     id: 'discount-50',
-    code: 'CUIRANNA50',
+    code: 'OUIRANNA50',
     discount: 50,
     points: 500,
     description: '50% discount on your next booking',
@@ -67,7 +67,7 @@ export const loyaltyOffers: LoyaltyOffer[] = [
   },
   {
     id: 'discount-100',
-    code: 'CUIRANNA100',
+    code: 'OUIRANNA100',
     discount: 100,
     points: 1000,
     description: 'FREE booking (100% discount)',

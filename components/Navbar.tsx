@@ -3,11 +3,15 @@
 import { useState, useEffect } from 'react'
 import { Menu, X, Plane } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { usePathname, useRouter } from 'next/navigation'
+import Link from 'next/link'
 import Logo from './Logo'
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const pathname = usePathname()
+  const router = useRouter()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,15 +21,30 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-      const navLinks = [
-        { href: '#home', label: 'Home' },
-        { href: '#destinations', label: 'Destinations' },
-        { href: '#tours', label: 'Tours' },
-        { href: '#experiences', label: 'Experiences' },
-        { href: '/loyalty', label: 'Programme Fidélité' },
-        { href: '#about', label: 'About' },
-        { href: '#contact', label: 'Contact' },
-      ]
+  const handleNavClick = (href: string) => {
+    if (href.startsWith('#')) {
+      // If we're not on home page, go to home first then scroll
+      if (pathname !== '/') {
+        router.push(`/${href}`)
+      } else {
+        // Already on home page, just scroll
+        const element = document.querySelector(href)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }
+      }
+    }
+  }
+
+  const navLinks = [
+    { href: '#home', label: 'Home' },
+    { href: '#destinations', label: 'Destinations' },
+    { href: '#tours', label: 'Tours' },
+    { href: '#experiences', label: 'Experiences' },
+    { href: '/loyalty', label: 'Programme Fidélité' },
+    { href: '#about', label: 'About' },
+    { href: '#contact', label: 'Contact' },
+  ]
 
   return (
     <motion.nav
@@ -39,27 +58,48 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
-          <motion.a
-            href="#home"
+          <Link
+            href="/"
             className="group"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
-            <Logo size="md" />
-          </motion.a>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Logo size="md" />
+            </motion.div>
+          </Link>
 
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <motion.a
-                key={link.href}
-                href={link.href}
-                className="text-sm font-medium text-gray-700 hover:text-primary transition-colors relative group no-underline"
-                whileHover={{ y: -2 }}
-              >
-                {link.label}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
-              </motion.a>
-            ))}
+            {navLinks.map((link) => {
+              if (link.href.startsWith('#')) {
+                return (
+                  <motion.a
+                    key={link.href}
+                    href={pathname === '/' ? link.href : `/${link.href}`}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      handleNavClick(link.href)
+                    }}
+                    className="text-sm font-medium text-gray-700 hover:text-primary transition-colors relative group no-underline cursor-pointer"
+                    whileHover={{ y: -2 }}
+                  >
+                    {link.label}
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
+                  </motion.a>
+                )
+              }
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm font-medium text-gray-700 hover:text-primary transition-colors relative group no-underline"
+                >
+                  {link.label}
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
+                </Link>
+              )
+            })}
           </div>
 
           <div className="hidden md:flex items-center gap-4">
@@ -96,16 +136,34 @@ export default function Navbar() {
               exit={{ opacity: 0, height: 0 }}
               className="md:hidden mt-4 space-y-4 pb-4"
             >
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="block text-gray-700 hover:text-primary transition-colors no-underline"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {link.label}
-                </a>
-              ))}
+                  {navLinks.map((link) => {
+                    if (link.href.startsWith('#')) {
+                      return (
+                        <a
+                          key={link.href}
+                          href={pathname === '/' ? link.href : `/${link.href}`}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            handleNavClick(link.href)
+                            setIsMobileMenuOpen(false)
+                          }}
+                          className="block text-gray-700 hover:text-primary transition-colors no-underline cursor-pointer"
+                        >
+                          {link.label}
+                        </a>
+                      )
+                    }
+                    return (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        className="block text-gray-700 hover:text-primary transition-colors no-underline"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        {link.label}
+                      </Link>
+                    )
+                  })}
               <a
                 href="/login"
                 className="block text-gray-700 hover:text-primary transition-colors no-underline mt-2"

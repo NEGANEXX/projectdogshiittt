@@ -56,13 +56,13 @@ export default function Footer() {
             <ul className="space-y-2 text-gray-300">
               <li>📍 23, rue Maarif Aviation, Rabat</li>
               <li>📞 +212 537 635 750</li>
-              <li>✉️ info@cuiranna.ma</li>
+              <li>✉️ info@ouiranna.ma</li>
               <li>🕒 Mon-Sat: 9AM - 6PM</li>
             </ul>
           </div>
         </div>
         <div className="border-t border-gray-700 pt-8 text-center text-gray-400">
-          <p>&copy; 2025 CUIRANNA. All rights reserved.</p>
+            <p>&copy; 2025 OUIRANNA. All rights reserved.</p>
         </div>
       </div>
     </footer>

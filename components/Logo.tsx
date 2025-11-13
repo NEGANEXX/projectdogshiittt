@@ -23,7 +23,7 @@ export default function Logo({ className = '', size = 'md' }: LogoProps) {
     >
       <Image
         src="/logo.png"
-        alt="CUIRANNA Logo"
+        alt="OUIRANNA Logo"
         width={size === 'sm' ? 240 : size === 'md' ? 300 : 400}
         height={size === 'sm' ? 80 : size === 'md' ? 100 : 140}
         className={sizeClasses[size]}

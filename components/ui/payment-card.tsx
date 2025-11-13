@@ -411,7 +411,7 @@ export function CreditCardForm() {
             <div className="flex gap-2">
               <Input
                 id="discountCode"
-                placeholder="Enter your code (e.g., CUIRANNA10)"
+                placeholder="Enter your code (e.g., OUIRANNA10)"
                 value={discountCode}
                 onChange={(e) => {
                   setDiscountCode(e.target.value.toUpperCase())
