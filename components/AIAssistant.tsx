@@ -13,19 +13,24 @@ const initializeAI = async () => {
   }
   
   try {
-    // Use dynamic import with explicit client-side check
+    // Dynamic import to avoid SSR issues
     const bytezModule = await import('bytez.js')
     const Bytez = bytezModule.default || bytezModule
+    
     if (!Bytez || typeof Bytez !== 'function') {
       throw new Error('Bytez not found or invalid')
     }
+    
     const key = 'ae45e701afc7b9c2210e845f353d5cf5'
     const sdk = new Bytez(key)
+    
     if (!sdk || typeof sdk.model !== 'function') {
       throw new Error('SDK initialization failed')
     }
-    // Choose Qwen3-4B-Instruct-2507 model
+    
+    // choose Qwen3-4B-Instruct-2507
     const model = sdk.model('Qwen/Qwen3-4B-Instruct-2507')
+    
     return model
   } catch (error) {
     console.error('Failed to initialize Bytez:', error)
@@ -101,82 +106,23 @@ export default function AIAssistant() {
         setAiModel(modelToUse)
       }
 
-      // Get current messages for API call - use ref to avoid stale closure
+      // Get current messages for API call
       const currentMessages = [...messages, userMessage]
       
-      // Call API asynchronously - following the Python SDK pattern
-      // output, error = model.run([{ "role": "user", "content": "Hello" }])
-      modelToUse.run(
-        currentMessages.map((msg) => ({
-          role: msg.role,
-          content: typeof msg.content === 'string' ? msg.content : String(msg.content),
-        }))
-      ).then((result: any) => {
-          try {
-            // Handle different response formats
-            let output: any = null
-            let error: any = null
-            
-            // Check if result is an array [output, error] like Python SDK
-            if (Array.isArray(result)) {
-              output = result[0]
-              error = result[1]
-            } 
-            // Check if result is an object with {output, error}
-            else if (result && typeof result === 'object') {
-              output = result.output || result.response || result.text
-              error = result.error || result.err
-            }
-            // Otherwise, treat result as output
-            else {
-              output = result
-            }
-            
-            if (error) {
-              console.error('AI Error:', error)
-              setMessages((prevMsgs) => [
-                ...prevMsgs,
-                {
-                  role: 'assistant',
-                  content: 'Sorry, I encountered an error. Please try again.',
-                },
-              ])
-            } else {
-              // Ensure output is a string
-              let responseText = 'I\'m here to help! What would you like to know about Morocco?'
-              if (output) {
-                if (typeof output === 'string') {
-                  responseText = output
-                } else if (typeof output === 'object' && output !== null) {
-                  // Handle object response - try to extract text
-                  responseText = output.text || output.content || output.message || output.response || JSON.stringify(output)
-                } else {
-                  responseText = String(output)
-                }
-              }
-              
-              setMessages((prevMsgs) => [
-                ...prevMsgs,
-                {
-                  role: 'assistant',
-                  content: responseText,
-                },
-              ])
-            }
-          } catch (parseError) {
-            console.error('Error parsing AI response:', parseError)
-            setMessages((prevMsgs) => [
-              ...prevMsgs,
-              {
-                role: 'assistant',
-                content: 'Sorry, I encountered an error processing the response.',
-              },
-            ])
-          } finally {
-            setIsLoading(false)
-          }
-        }).catch((apiError: any) => {
-          console.error('AI API Error:', apiError)
+      // send input to model
+      // const { error, output } = await model.run([{ "role": "user", "content": "Hello" }])
+      try {
+        const { error, output } = await modelToUse.run(
+          currentMessages.map((msg) => ({
+            role: msg.role,
+            content: typeof msg.content === 'string' ? msg.content : String(msg.content),
+          }))
+        )
+        
+        console.log({ error, output })
+        
+        if (error) {
+          console.error('AI Error:', error)
           setMessages((prevMsgs) => [
             ...prevMsgs,
             {
@@ -184,8 +130,40 @@ export default function AIAssistant() {
               content: 'Sorry, I encountered an error. Please try again.',
             },
           ])
-          setIsLoading(false)
-        })
+        } else {
+          // Ensure output is a string
+          let responseText = 'I\'m here to help! What would you like to know about Morocco?'
+          if (output) {
+            if (typeof output === 'string') {
+              responseText = output
+            } else if (typeof output === 'object' && output !== null) {
+              // Handle object response - try to extract text
+              responseText = output.text || output.content || output.message || output.response || JSON.stringify(output)
+            } else {
+              responseText = String(output)
+            }
+          }
+          
+          setMessages((prevMsgs) => [
+            ...prevMsgs,
+            {
+              role: 'assistant',
+              content: responseText,
+            },
+          ])
+        }
+      } catch (apiError: any) {
+        console.error('AI API Error:', apiError)
+        setMessages((prevMsgs) => [
+          ...prevMsgs,
+          {
+            role: 'assistant',
+            content: 'Sorry, I encountered an error. Please try again.',
+          },
+        ])
+      } finally {
+        setIsLoading(false)
+      }
     } catch (err: any) {
       console.error('AI Error:', err)
       setMessages((prev) => [
