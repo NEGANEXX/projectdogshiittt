@@ -68,7 +68,7 @@ export default function Hero() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 1 }}
-              className="absolute inset-0"
+              className="absolute inset-0 z-0"
             >
               <div
                 className="absolute inset-0 bg-cover bg-center"
@@ -80,7 +80,7 @@ export default function Hero() {
         ))}
       </AnimatePresence>
 
-      <div className="relative z-10 h-full flex items-center justify-center text-center text-white px-4">
+      <div className="relative z-[15] h-full flex items-center justify-center text-center text-white px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

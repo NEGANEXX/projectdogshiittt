@@ -5,66 +5,36 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Star, Clock, MapPin } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
+import { toursData } from '@/lib/tours-data'
 
-const tours = [
-  {
-    title: 'Sahara Desert Adventure',
-    category: 'desert',
-    price: '7,800 MAD',
-    duration: '4 Days',
-    rating: '4.9',
-    image: 'https://images.unsplash.com/photo-1510952267577-fc96d5ca660a?w=1200&auto=format&fit=crop&q=80&ixlib=rb-4.1.0',
-    badge: 'Popular',
-  },
-  {
-    title: 'Imperial Cities Tour',
-    category: 'cities',
-    price: '10,950 MAD',
-    duration: '7 Days',
-    rating: '4.8',
-    image: 'https://images.unsplash.com/photo-1624805098931-098c0d918b34?w=1200&auto=format&fit=crop&q=80&ixlib=rb-4.1.0',
-  },
-  {
-    title: 'Atlas Mountains Trek',
-    category: 'mountains',
-    price: '5,200 MAD',
-    duration: '3 Days',
-    rating: '5.0',
-    image: 'https://images.unsplash.com/photo-1560789590-ee4cc7125967?w=1200&auto=format&fit=crop&q=80&ixlib=rb-4.1.0',
-    badge: 'New',
-  },
-  {
-    title: 'Coastal Paradise',
-    category: 'coast',
-    price: '6,200 MAD',
-    duration: '5 Days',
-    rating: '4.7',
-    image: 'https://images.unsplash.com/photo-1613057157282-cc3cbe630b26?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.1.0',
-  },
-  {
-    title: 'Marrakech Express',
-    category: 'cities',
-    price: '5,200 MAD',
-    duration: '3 Days',
-    rating: '4.9',
-    image: 'https://images.unsplash.com/photo-1624805098931-098c0d918b34?w=1200&auto=format&fit=crop&q=80&ixlib=rb-4.1.0',
-  },
-  {
-    title: 'Desert & Mountains',
-    category: 'desert',
-    price: '11,900 MAD',
-    duration: '8 Days',
-    rating: '4.9',
-    image: 'https://images.unsplash.com/photo-1510952267577-fc96d5ca660a?w=1200&auto=format&fit=crop&q=80&ixlib=rb-4.1.0',
-    badge: 'Best Value',
-  },
-]
+// Use tours data from lib
+const tours = toursData.map((tour) => ({
+  id: tour.id,
+  title: tour.title,
+  category: tour.category,
+  price: tour.price,
+  duration: tour.duration,
+  rating: tour.rating,
+  image: tour.image,
+  badge: tour.badge,
+}))
 
 const filters = ['all', 'desert', 'cities', 'mountains', 'coast']
 
 export default function Tours() {
   const [activeFilter, setActiveFilter] = useState('all')
   const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true })
+
+  if (!tours || tours.length === 0) {
+    return (
+      <section id="tours" className="py-20 bg-white">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-gray-600">Loading tours...</p>
+        </div>
+      </section>
+    )
+  }
 
   const filteredTours =
     activeFilter === 'all'
@@ -110,14 +80,14 @@ export default function Tours() {
 
         <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredTours.map((tour, index) => (
-            <motion.div
-              key={tour.title}
-              initial={{ opacity: 0, y: 50 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ y: -10 }}
-              className="group relative bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer"
-            >
+            <Link key={tour.id} href={`/tours/${tour.id}`}>
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -10 }}
+                className="group relative bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer h-full"
+              >
               <div className="relative h-56 overflow-hidden">
                 <Image
                   src={tour.image}
@@ -150,16 +120,17 @@ export default function Tours() {
                   <div className="text-2xl font-serif font-bold text-primary">
                     {tour.price}
                   </div>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary-dark transition-all"
+                  <Link
+                    href="/payment"
+                    onClick={(e) => e.stopPropagation()}
+                    className="px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary-dark transition-all inline-block text-center"
                   >
                     Book Now
-                  </motion.button>
+                  </Link>
                 </div>
               </div>
             </motion.div>
+            </Link>
           ))}
         </div>
       </div>

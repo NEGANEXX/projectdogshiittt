@@ -20,7 +20,7 @@ export default function Footer() {
                 <a
                   key={index}
                   href="#"
-                  className="text-2xl hover:scale-110 transition-transform"
+                  className="text-2xl hover:scale-110 transition-transform no-underline"
                 >
                   {icon}
                 </a>
@@ -32,7 +32,7 @@ export default function Footer() {
             <ul className="space-y-2 text-gray-300">
               {['Destinations', 'Tours', 'Experiences', 'About Us'].map((link) => (
                 <li key={link}>
-                  <a href={`#${link.toLowerCase()}`} className="hover:text-primary transition-colors">
+                  <a href={`#${link.toLowerCase()}`} className="hover:text-primary transition-colors no-underline">
                     {link}
                   </a>
                 </li>
@@ -44,7 +44,7 @@ export default function Footer() {
             <ul className="space-y-2 text-gray-300">
               {['FAQ', 'Travel Guide', 'Terms & Conditions', 'Privacy Policy'].map((link) => (
                 <li key={link}>
-                  <a href="#" className="hover:text-primary transition-colors">
+                  <a href="#" className="hover:text-primary transition-colors no-underline">
                     {link}
                   </a>
                 </li>

@@ -84,7 +84,7 @@ export default function Destinations() {
                 <p className="text-gray-600 mb-4">{dest.description}</p>
                 <a
                   href="#"
-                  className="inline-flex items-center gap-2 text-primary font-semibold group-hover:gap-4 transition-all"
+                  className="inline-flex items-center gap-2 text-primary font-semibold group-hover:gap-4 transition-all no-underline"
                 >
                   Explore <ArrowRight size={18} />
                 </a>

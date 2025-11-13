@@ -30,10 +30,10 @@ export default function Navbar() {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-30 transition-all duration-300 ${
         isScrolled
           ? 'bg-white/95 backdrop-blur-md shadow-lg py-3'
-          : 'bg-transparent py-5'
+          : 'bg-white/80 backdrop-blur-sm py-5'
       }`}
     >
       <div className="container mx-auto px-4 md:px-6">
@@ -52,7 +52,7 @@ export default function Navbar() {
               <motion.a
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-gray-700 hover:text-primary transition-colors relative group"
+                className="text-sm font-medium text-gray-700 hover:text-primary transition-colors relative group no-underline"
                 whileHover={{ y: -2 }}
               >
                 {link.label}
@@ -61,13 +61,23 @@ export default function Navbar() {
             ))}
           </div>
 
-          <motion.button
-            className="hidden md:block px-6 py-2.5 bg-primary text-white rounded-full font-semibold hover:bg-primary-dark transition-all shadow-lg hover:shadow-xl"
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Plan Your Trip
-          </motion.button>
+          <div className="hidden md:flex items-center gap-4">
+            <motion.a
+              href="/login"
+              className="px-6 py-2.5 bg-transparent border-2 border-primary text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all no-underline"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Login
+            </motion.a>
+            <motion.button
+              className="px-6 py-2.5 bg-primary text-white rounded-full font-semibold hover:bg-primary-dark transition-all shadow-lg hover:shadow-xl"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Plan Your Trip
+            </motion.button>
+          </div>
 
           <button
             className="md:hidden p-2"
@@ -89,12 +99,26 @@ export default function Navbar() {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="block text-gray-700 hover:text-primary transition-colors"
+                  className="block text-gray-700 hover:text-primary transition-colors no-underline"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.label}
                 </a>
               ))}
+              <a
+                href="/login"
+                className="block text-gray-700 hover:text-primary transition-colors no-underline mt-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Login
+              </a>
+              <a
+                href="/login"
+                className="block text-gray-700 hover:text-primary transition-colors no-underline"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Login
+              </a>
             </motion.div>
           )}
         </AnimatePresence>
