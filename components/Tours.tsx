@@ -7,6 +7,7 @@ import { Star, Clock, MapPin } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { toursData } from '@/lib/tours-data'
+import { addPoints } from '@/lib/loyalty-data'
 
 // Use tours data from lib
 const tours = toursData.map((tour) => ({
@@ -120,13 +121,17 @@ export default function Tours() {
                   <div className="text-2xl font-serif font-bold text-primary">
                     {tour.price}
                   </div>
-                  <Link
-                    href="/payment"
-                    onClick={(e) => e.stopPropagation()}
-                    className="px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary-dark transition-all inline-block text-center"
-                  >
-                    Book Now
-                  </Link>
+                      <Link
+                        href="/payment"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          // Add 50 points when booking
+                          addPoints(50)
+                        }}
+                        className="px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary-dark transition-all inline-block text-center"
+                      >
+                        Book Now
+                      </Link>
                 </div>
               </div>
             </motion.div>

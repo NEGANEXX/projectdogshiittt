@@ -17,14 +17,15 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const navLinks = [
-    { href: '#home', label: 'Home' },
-    { href: '#destinations', label: 'Destinations' },
-    { href: '#tours', label: 'Tours' },
-    { href: '#experiences', label: 'Experiences' },
-    { href: '#about', label: 'About' },
-    { href: '#contact', label: 'Contact' },
-  ]
+      const navLinks = [
+        { href: '#home', label: 'Home' },
+        { href: '#destinations', label: 'Destinations' },
+        { href: '#tours', label: 'Tours' },
+        { href: '#experiences', label: 'Experiences' },
+        { href: '/loyalty', label: 'Programme Fidélité' },
+        { href: '#about', label: 'About' },
+        { href: '#contact', label: 'Contact' },
+      ]
 
   return (
     <motion.nav

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import { LiquidCard, CardContent } from "@/components/ui/liquid-glass-card"
 
@@ -9,6 +9,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 import { Button } from "@/components/ui/liquid-glass-button"
+
+import { validateDiscountCode, getRedeemedCodes } from "@/lib/loyalty-data"
 
 export function CreditCardForm() {
 
@@ -25,6 +27,11 @@ export function CreditCardForm() {
   })
 
   const [isFlipped, setIsFlipped] = useState(false)
+  const [discountCode, setDiscountCode] = useState("")
+  const [appliedDiscount, setAppliedDiscount] = useState(0)
+  const [discountMessage, setDiscountMessage] = useState("")
+  const [basePrice] = useState(7800) // Example base price
+  const [availableCodes, setAvailableCodes] = useState<string[]>([])
 
   // Format card number with spaces every 4 digits
 
@@ -125,6 +132,30 @@ export function CreditCardForm() {
     }))
 
   }
+
+  useEffect(() => {
+    setAvailableCodes(getRedeemedCodes())
+  }, [])
+
+  const handleApplyDiscount = () => {
+    if (!discountCode.trim()) {
+      setDiscountMessage("Please enter a discount code")
+      setAppliedDiscount(0)
+      return
+    }
+
+    const result = validateDiscountCode(discountCode.trim())
+    
+    if (result.valid) {
+      setAppliedDiscount(result.discount)
+      setDiscountMessage(result.message)
+    } else {
+      setAppliedDiscount(0)
+      setDiscountMessage(result.message)
+    }
+  }
+
+  const finalPrice = basePrice - (basePrice * appliedDiscount / 100)
 
   const cardType = getCardType(cardData.number)
 
@@ -374,9 +405,66 @@ export function CreditCardForm() {
 
           </div>
 
+          {/* Discount Code Section */}
+          <div className="space-y-2 mt-6 pt-6 border-t border-gray-200">
+            <Label htmlFor="discountCode">Discount Code (Code de réduction)</Label>
+            <div className="flex gap-2">
+              <Input
+                id="discountCode"
+                placeholder="Enter your code (e.g., CUIRANNA10)"
+                value={discountCode}
+                onChange={(e) => {
+                  setDiscountCode(e.target.value.toUpperCase())
+                  if (discountMessage) setDiscountMessage("")
+                }}
+                className="flex-1"
+              />
+              <Button
+                type="button"
+                onClick={handleApplyDiscount}
+                className="whitespace-nowrap"
+                size="lg"
+              >
+                Apply
+              </Button>
+            </div>
+            {discountMessage && (
+              <div className={`text-sm p-2 rounded ${
+                appliedDiscount > 0 
+                  ? 'bg-green-100 text-green-700' 
+                  : 'bg-red-100 text-red-700'
+              }`}>
+                {discountMessage}
+              </div>
+            )}
+            {availableCodes.length > 0 && (
+              <div className="text-xs text-gray-500 mt-2">
+                Your available codes: {availableCodes.join(", ")}
+              </div>
+            )}
+          </div>
+
+          {/* Price Summary */}
+          <div className="mt-6 pt-6 border-t border-gray-200 space-y-2">
+            <div className="flex justify-between text-gray-600">
+              <span>Subtotal:</span>
+              <span>{basePrice.toLocaleString()} MAD</span>
+            </div>
+            {appliedDiscount > 0 && (
+              <div className="flex justify-between text-green-600">
+                <span>Discount ({appliedDiscount}%):</span>
+                <span>-{(basePrice * appliedDiscount / 100).toLocaleString()} MAD</span>
+              </div>
+            )}
+            <div className="flex justify-between text-xl font-bold pt-2 border-t border-gray-200">
+              <span>Total:</span>
+              <span className="text-primary">{finalPrice.toLocaleString()} MAD</span>
+            </div>
+          </div>
+
           <Button className="w-full mt-6" size="lg">
 
-            Pay Now
+            Pay {finalPrice.toLocaleString()} MAD
 
           </Button>
 
