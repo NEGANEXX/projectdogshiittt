@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowDown, Play } from 'lucide-react'
 import { useInView } from 'react-intersection-observer'
+import VideoModal from './VideoModal'
 
 const slides = [
   {
@@ -49,6 +50,7 @@ export default function Hero() {
   const [imageSources, setImageSources] = useState<Record<number, string>>({})
   const [imagesLoaded, setImagesLoaded] = useState(false)
   const [progress, setProgress] = useState(0)
+  const [isVideoOpen, setIsVideoOpen] = useState(false)
   const { ref, inView } = useInView({ threshold: 0.5 })
 
   // Set image sources immediately
@@ -187,6 +189,7 @@ export default function Hero() {
             <motion.button
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => setIsVideoOpen(true)}
               className="px-8 py-4 glass rounded-full font-semibold border-2 border-white/50 hover:border-white transition-all flex items-center gap-2"
             >
               <Play size={20} fill="white" />
@@ -259,6 +262,13 @@ export default function Hero() {
           ))}
         </div>
       </div>
+
+      {/* Video Modal */}
+      <VideoModal
+        isOpen={isVideoOpen}
+        onClose={() => setIsVideoOpen(false)}
+        videoSrc="/videos/essaouira-promo.mp4"
+      />
     </section>
   )
 }
