@@ -7,6 +7,7 @@ import Destinations from '@/components/Destinations'
 import Tours from '@/components/Tours'
 import Experiences from '@/components/Experiences'
 import Testimonials from '@/components/Testimonials'
+import Collaboration from '@/components/Collaboration'
 import CTA from '@/components/CTA'
 import Footer from '@/components/Footer'
 import ParticleBackground from '@/components/ParticleBackground'
@@ -50,6 +51,7 @@ export default function Home() {
       <Tours />
       <Experiences />
       <Testimonials />
+      <Collaboration />
       <CTA />
       <Footer />
     </main>

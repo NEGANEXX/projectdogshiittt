@@ -7,33 +7,84 @@ import { useInView } from 'react-intersection-observer'
 
 const slides = [
   {
-    image: 'https://images.unsplash.com/photo-1624805098931-098c0d918b34?w=1920&auto=format&fit=crop&q=80&ixlib=rb-4.1.0',
-    title: 'Discover the',
-    highlight: 'Magic of Morocco',
+    image: '/images/hero-1.jpg',
+    title: 'Discover',
+    highlight: 'Essaouira',
   },
   {
-    image: 'https://images.unsplash.com/photo-1559925523-10de9e23cf90?w=1920&auto=format&fit=crop&q=80&ixlib=rb-4.1.0',
-    title: 'Explore Ancient',
-    highlight: 'Medinas & Souks',
+    image: '/images/hero-2.jpg',
+    title: 'Explore the',
+    highlight: 'Historic Medina',
   },
   {
-    image: 'https://images.unsplash.com/photo-1510952267577-fc96d5ca660a?w=1920&auto=format&fit=crop&q=80&ixlib=rb-4.1.0',
-    title: 'Journey Through',
-    highlight: 'Sahara Desert',
+    image: '/images/hero-3.jpg',
+    title: 'Experience',
+    highlight: 'Fishing Port',
+  },
+  {
+    image: '/images/hero-4.jpg',
+    title: 'Relax on',
+    highlight: 'Beautiful Beaches',
+  },
+  {
+    image: '/images/hero-5.jpg',
+    title: 'Discover',
+    highlight: 'Coastal Beauty',
+  },
+  {
+    image: '/images/hero-6.jpg',
+    title: 'Explore',
+    highlight: 'Ancient Ramparts',
+  },
+  {
+    image: '/images/hero-7.jpg',
+    title: 'Journey to',
+    highlight: 'Essaouira',
   },
 ]
 
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [stats, setStats] = useState({ travelers: 0, destinations: 0, satisfaction: 0 })
+  const [imageSources, setImageSources] = useState<Record<number, string>>({})
+  const [imagesLoaded, setImagesLoaded] = useState(false)
+  const [progress, setProgress] = useState(0)
   const { ref, inView } = useInView({ threshold: 0.5 })
 
+  // Set image sources immediately
   useEffect(() => {
-    const interval = setInterval(() => {
+    const initialSources: Record<number, string> = {}
+    slides.forEach((slide, index) => {
+      initialSources[index] = slide.image
+    })
+    setImageSources(initialSources)
+    setImagesLoaded(true)
+  }, [])
+
+  // Auto-rotate slides every 5 seconds with progress indicator
+  useEffect(() => {
+    setProgress(0)
+    const progressInterval = setInterval(() => {
+      setProgress((prev) => {
+        const next = prev + 2 // Update every 100ms (5 seconds = 5000ms / 50 updates = 2% per update)
+        return next >= 100 ? 100 : next
+      })
+    }, 100)
+
+    const slideInterval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length)
     }, 5000)
-    return () => clearInterval(interval)
+    
+    return () => {
+      clearInterval(progressInterval)
+      clearInterval(slideInterval)
+    }
   }, [])
+
+  // Reset progress when slide changes
+  useEffect(() => {
+    setProgress(0)
+  }, [currentSlide])
 
   useEffect(() => {
     if (inView) {
@@ -58,35 +109,39 @@ export default function Hero() {
   }, [inView])
 
   return (
-    <section id="home" className="relative h-screen overflow-hidden">
+    <section id="home" className="relative h-screen overflow-hidden z-10">
       <AnimatePresence mode="wait">
         {slides.map((slide, index) => (
           index === currentSlide && (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 1.1 }}
+              key={`slide-${index}-${currentSlide}`}
+              initial={{ opacity: 0, scale: 1.05 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 1.2, ease: 'easeInOut' }}
               className="absolute inset-0 z-0"
             >
               <div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: `url(${slide.image})` }}
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                style={{
+                  backgroundImage: `url(${imageSources[index] || slide.image})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60 z-[1]" />
             </motion.div>
           )
         ))}
       </AnimatePresence>
 
-      <div className="relative z-[15] h-full flex items-center justify-center text-center text-white px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl"
-        >
+      <div className="relative z-[20] h-full flex items-center justify-center text-center text-white px-4 pointer-events-none">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl pointer-events-auto"
+          >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -168,7 +223,7 @@ export default function Hero() {
       </div>
 
       <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 text-white text-center"
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-[20] text-white text-center pointer-events-auto"
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
@@ -178,16 +233,31 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10 flex gap-2">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentSlide(index)}
-            className={`h-2 rounded-full transition-all ${
-              index === currentSlide ? 'w-8 bg-primary' : 'w-2 bg-white/50'
-            }`}
-          />
-        ))}
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-[20] flex flex-col items-center gap-3 pointer-events-auto">
+        <div className="flex gap-2">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => {
+                setCurrentSlide(index)
+                setProgress(0)
+              }}
+              className={`h-2 rounded-full transition-all relative overflow-hidden ${
+                index === currentSlide ? 'w-8 bg-white/30' : 'w-2 bg-white/50'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            >
+              {index === currentSlide && (
+                <motion.div
+                  className="absolute inset-0 bg-primary rounded-full"
+                  initial={{ width: '0%' }}
+                  animate={{ width: `${progress}%` }}
+                  transition={{ duration: 0.1 }}
+                />
+              )}
+            </button>
+          ))}
+        </div>
       </div>
     </section>
   )

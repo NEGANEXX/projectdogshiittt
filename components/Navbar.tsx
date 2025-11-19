@@ -43,6 +43,7 @@ export default function Navbar() {
     { href: '#experiences', label: 'Experiences' },
     { href: '/loyalty', label: 'Programme Fidélité' },
     { href: '#about', label: 'About' },
+    { href: '#collaboration', label: 'Collaboration' },
     { href: '#contact', label: 'Contact' },
   ]
 

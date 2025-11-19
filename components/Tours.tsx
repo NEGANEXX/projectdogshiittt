@@ -81,61 +81,64 @@ export default function Tours() {
 
         <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredTours.map((tour, index) => (
-            <Link key={tour.id} href={`/tours/${tour.id}`}>
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -10 }}
-                className="group relative bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer h-full"
-              >
-              <div className="relative h-56 overflow-hidden">
-                <Image
-                  src={tour.image}
-                  alt={tour.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                {tour.badge && (
-                  <div className="absolute top-4 right-4 px-3 py-1 bg-accent text-white rounded-full text-xs font-semibold">
-                    {tour.badge}
+            <motion.div
+              key={tour.id}
+              initial={{ opacity: 0, y: 50 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: index * 0.1 }}
+              whileHover={{ y: -10 }}
+              className="group relative bg-white rounded-2xl shadow-lg overflow-hidden h-full flex flex-col"
+            >
+              <Link href={`/tours/${tour.id}`} className="flex-1 flex flex-col">
+                <div className="relative h-56 overflow-hidden">
+                  <Image
+                    src={tour.image}
+                    alt={tour.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  {tour.badge && (
+                    <div className="absolute top-4 right-4 px-3 py-1 bg-accent text-white rounded-full text-xs font-semibold">
+                      {tour.badge}
+                    </div>
+                  )}
+                </div>
+                <div className="p-6 flex-1 flex flex-col">
+                  <div className="text-xs text-primary font-semibold uppercase mb-2">
+                    {tour.category}
                   </div>
-                )}
-              </div>
-              <div className="p-6">
-                <div className="text-xs text-primary font-semibold uppercase mb-2">
-                  {tour.category}
-                </div>
-                <h3 className="text-xl font-bold text-secondary mb-3">{tour.title}</h3>
-                <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
-                  <span className="flex items-center gap-1">
-                    <Star size={16} className="text-yellow-400 fill-yellow-400" />
-                    {tour.rating}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Clock size={16} />
-                    {tour.duration}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="text-2xl font-serif font-bold text-primary">
-                    {tour.price}
+                  <h3 className="text-xl font-bold text-secondary mb-3">{tour.title}</h3>
+                  <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
+                    <span className="flex items-center gap-1">
+                      <Star size={16} className="text-yellow-400 fill-yellow-400" />
+                      {tour.rating}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Clock size={16} />
+                      {tour.duration}
+                    </span>
                   </div>
-                      <Link
-                        href="/payment"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          // Add 50 points when booking
-                          addPoints(50)
-                        }}
-                        className="px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary-dark transition-all inline-block text-center"
-                      >
-                        Book Now
-                      </Link>
+                  <div className="flex items-center justify-between mt-auto">
+                    <div className="text-2xl font-serif font-bold text-primary">
+                      {tour.price}
+                    </div>
+                  </div>
                 </div>
+              </Link>
+              <div className="px-6 pb-6">
+                <Link
+                  href="/payment"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    // Add 50 points when booking
+                    addPoints(50)
+                  }}
+                  className="block w-full px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary-dark transition-all text-center"
+                >
+                  Book Now
+                </Link>
               </div>
             </motion.div>
-            </Link>
           ))}
         </div>
       </div>

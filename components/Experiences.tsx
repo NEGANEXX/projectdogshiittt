@@ -1,8 +1,24 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import Image from 'next/image'
+
+const experienceImages = [
+  {
+    local: '/images/experience-1.jpg',
+    fallback: 'https://images.unsplash.com/photo-1624805098931-098c0d918b34?w=800&auto=format&fit=crop&q=80&ixlib=rb-4.1.0',
+  },
+  {
+    local: '/images/experience-2.jpg',
+    fallback: 'https://images.unsplash.com/photo-1538600838042-6a0c694ffab5?w=600&auto=format&fit=crop&q=80&ixlib=rb-4.1.0',
+  },
+  {
+    local: '/images/experience-3.jpg',
+    fallback: 'https://images.unsplash.com/photo-1559925523-10de9e23cf90?w=1200&auto=format&fit=crop&q=80&ixlib=rb-4.1.0',
+  },
+]
 
 const features = [
   {
@@ -24,6 +40,32 @@ const features = [
 
 export default function Experiences() {
   const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true })
+  const [imageSources, setImageSources] = useState<string[]>([])
+
+  useEffect(() => {
+    const sources: string[] = []
+    let loadedCount = 0
+    const totalImages = experienceImages.length
+
+    experienceImages.forEach((img, index) => {
+      const image = new window.Image()
+      image.onload = () => {
+        sources[index] = img.local
+        loadedCount++
+        if (loadedCount === totalImages) {
+          setImageSources([...sources])
+        }
+      }
+      image.onerror = () => {
+        sources[index] = img.fallback
+        loadedCount++
+        if (loadedCount === totalImages) {
+          setImageSources([...sources])
+        }
+      }
+      image.src = img.local
+    })
+  }, [])
 
   return (
     <section id="experiences" className="py-20 bg-gray-50">
@@ -81,26 +123,29 @@ export default function Experiences() {
           >
             <div className="relative h-64 rounded-2xl overflow-hidden group">
               <Image
-                src="https://images.unsplash.com/photo-1624805098931-098c0d918b34?w=800&auto=format&fit=crop&q=80&ixlib=rb-4.1.0"
+                src={imageSources[0] || experienceImages[0].fallback}
                 alt="Moroccan Experience"
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-110"
+                unoptimized
               />
             </div>
             <div className="relative h-64 rounded-2xl overflow-hidden group">
               <Image
-                src="https://images.unsplash.com/photo-1538600838042-6a0c694ffab5?w=600&auto=format&fit=crop&q=80&ixlib=rb-4.1.0"
+                src={imageSources[1] || experienceImages[1].fallback}
                 alt="Moroccan Experience"
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-110"
+                unoptimized
               />
             </div>
             <div className="relative h-64 rounded-2xl overflow-hidden group col-span-2">
               <Image
-                src="https://images.unsplash.com/photo-1559925523-10de9e23cf90?w=1200&auto=format&fit=crop&q=80&ixlib=rb-4.1.0"
+                src={imageSources[2] || experienceImages[2].fallback}
                 alt="Moroccan Experience"
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-110"
+                unoptimized
               />
             </div>
           </motion.div>

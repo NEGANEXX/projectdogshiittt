@@ -31,14 +31,15 @@ export default function Destinations() {
 
         <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {destinationsData.map((dest, index) => (
-            <Link key={dest.id} href={`/destinations/${dest.id}`}>
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -10 }}
-                className="group relative overflow-hidden rounded-2xl bg-white shadow-lg cursor-pointer h-full"
-              >
+            <motion.div
+              key={dest.id}
+              initial={{ opacity: 0, y: 50 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: index * 0.1 }}
+              whileHover={{ y: -10 }}
+              className="group relative overflow-hidden rounded-2xl bg-white shadow-lg cursor-pointer h-full"
+            >
+              <Link href={`/destinations/${dest.id}`} className="block h-full">
                 <div className="relative h-64 overflow-hidden">
                   <Image
                     src={dest.image}
@@ -55,8 +56,8 @@ export default function Destinations() {
                     Explore <ArrowRight size={18} />
                   </div>
                 </div>
-              </motion.div>
-            </Link>
+              </Link>
+            </motion.div>
           ))}
         </div>
       </div>

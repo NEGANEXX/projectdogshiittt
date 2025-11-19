@@ -18,6 +18,7 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
+    unoptimized: process.env.NODE_ENV === 'development',
   },
   webpack: (config, { isServer }) => {
     // Prevent bytez.js from being bundled on server side
