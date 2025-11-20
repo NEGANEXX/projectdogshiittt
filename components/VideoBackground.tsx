@@ -17,7 +17,7 @@ export default function VideoBackground() {
   }, [inView])
 
   return (
-    <section ref={ref} className="relative h-screen overflow-hidden">
+    <section ref={ref} className="relative h-screen overflow-hidden bg-white">
       {/* Background Video */}
       <div className="absolute inset-0 z-0">
         <video
@@ -32,11 +32,11 @@ export default function VideoBackground() {
           Your browser does not support the video tag.
         </video>
         {/* Overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/50" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-white/30 to-white/50" />
       </div>
 
       {/* Content Overlay */}
-      <div className="relative z-10 h-full flex items-center justify-center text-center text-white px-4">
+      <div className="relative z-10 h-full flex items-center justify-center text-center px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -47,7 +47,7 @@ export default function VideoBackground() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={inView ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: 0.2 }}
-            className="inline-block px-6 py-2 glass rounded-full mb-6 text-sm font-semibold"
+            className="inline-block px-6 py-2 bg-primary/10 text-primary rounded-full mb-6 text-sm font-semibold"
           >
             ✨ Experience Essaouira
           </motion.div>
@@ -56,7 +56,7 @@ export default function VideoBackground() {
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.3 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold mb-6"
+            className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold mb-6 text-secondary"
           >
             <span className="block">Discover the</span>
             <span className="block gradient-text">Coastal Gem</span>
@@ -66,7 +66,7 @@ export default function VideoBackground() {
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.4 }}
-            className="text-lg md:text-xl mb-8 text-gray-200 max-w-2xl mx-auto"
+            className="text-lg md:text-xl mb-8 text-gray-700 max-w-2xl mx-auto"
           >
             Where the Atlantic Ocean meets ancient history, creating a unique blend of culture, 
             adventure, and breathtaking beauty.
@@ -88,7 +88,7 @@ export default function VideoBackground() {
             <motion.button
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 glass rounded-full font-semibold border-2 border-white/50 hover:border-white transition-all"
+              className="px-8 py-4 bg-white border-2 border-primary text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all"
             >
               Book Your Stay
             </motion.button>
