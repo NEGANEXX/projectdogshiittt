@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
+import VideoBackground from '@/components/VideoBackground'
 import Destinations from '@/components/Destinations'
 import Tours from '@/components/Tours'
 import Experiences from '@/components/Experiences'
@@ -47,6 +48,7 @@ export default function Home() {
       />
       <Navbar />
       <Hero />
+      <VideoBackground />
       <Destinations />
       <Tours />
       <Experiences />
